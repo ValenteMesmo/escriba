@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'DejaVu Sans Mono for Powerline';
+    src: url('assets/DejaVu_Sans_Mono_for_Powerline.ttf');
+}
+
+body {
+    color: rgb(117, 117, 117);
+    background-color: rgb(39, 40, 34);
+    font-family: "DejaVu Sans Mono for Powerline";
+}

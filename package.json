@@ -1,6 +1,6 @@
 {
     "scripts": {
-        "dev": "npx http-server src"
+        "dev": "npx http-server ."
     },
     "devDependencies": {
         "http-server": "^14.1.1"

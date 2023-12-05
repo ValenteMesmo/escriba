@@ -1,0 +1,42 @@
+<html>
+
+<head>
+
+    <link rel="stylesheet" href="main.css" />
+
+    <script>
+
+        function submitForm(e, form) {
+
+            const key = "escriba-list";
+
+            const array = JSON.parse(localStorage.getItem(key) || '[]');
+
+            const title = form['title'].value;
+
+            const newItem = {
+                id: title.normalize("NFD").replace(/\p{Diacritic}/gu, "").trim().replace(/\s/g, "-").replace(/[^a-zA-Z0-9-]/g, '').toLowerCase(),
+                title: title
+            };
+
+            array.push(newItem);
+
+            localStorage.setItem(key, JSON.stringify(array));            
+
+            e.preventDefault();
+
+            window.location = `book-edit?id=${newItem.id}`;
+        }
+
+    </script>
+
+</head>
+
+<body>
+    <form onsubmit="submitForm(event, this)">
+        <label> Title </label>
+        <input type="text" name="title" autofocus>
+    </form>
+</body>
+
+</html>
