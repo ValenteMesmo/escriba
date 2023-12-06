@@ -3,14 +3,13 @@
 <head>
 
     <link rel="stylesheet" href="main.css" />
+    <script src="services/storage-service.js"></script>
 
     <script>
 
         function submitForm(e, form) {
 
-            const key = "escriba-list";
-
-            const array = JSON.parse(localStorage.getItem(key) || '[]');
+            const list = storageService.loadBookList() || {};
 
             const title = form['title'].value;
 
@@ -19,9 +18,9 @@
                 title: title
             };
 
-            array.push(newItem);
+            list[newItem.id] = newItem;
 
-            localStorage.setItem(key, JSON.stringify(array));            
+            storageService.saveBookList(list);            
 
             e.preventDefault();
 

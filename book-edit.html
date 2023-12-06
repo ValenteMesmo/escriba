@@ -1,17 +1,94 @@
 <html>
 
 <head>
-
+    <script src="services/storage-service.js"></script>
     <link rel="stylesheet" href="main.css" />
 
     <script>
+        function init() {
+            const id = new URLSearchParams(window.location.search).get('id');
+            if (!id)
+                window.location = `book-new`;
 
+            const form = document.getElementsByTagName('form')[0];
+
+            const title = (storageService.loadBookList() || {})[id]?.title;
+
+            if (title) {
+                form[0].value = title;
+            }
+
+            const data = storageService.loadBookData(id) || {};
+
+            if (!data.chapters)
+                return;
+
+            var content = '';
+
+            data.chapters.forEach(f => {
+                content += `###${f.title}\n`;
+                f.content.forEach(g => {
+                    content += `${g.value}\n`;
+                });
+            });
+
+            form[1].value = content;
+        }
+
+        function submitForm(e, form) {
+            e.preventDefault();
+
+            const id = new URLSearchParams(window.location.search).get('id');
+
+            const list = (storageService.loadBookList() || {});
+            if (!list[id])
+                list[id] = {};
+            list[id].title = form[0].value;
+            storageService.saveBookList(list);
+
+            const lines = form[1].value.split('\n');
+
+            var data = { chapters: [] };
+            var chapter = { title: '', content: [] };
+            data.chapters.push(chapter);
+
+            lines.forEach(f => {
+                if (f.startsWith("###")) {
+                    const chapterName = f.split("###")[1];
+                    if (!chapter.title)
+                        chapter.title = chapterName;
+                    else {
+                        chapter = { title: chapterName, content: [] };
+                        data.chapters.push(chapter);
+                    }
+                }
+                else if(f)
+                    chapter.content.push({value: f});
+            });
+
+            storageService.saveBookData(id, data);
+
+            window.location = '/';
+        }
     </script>
-
 </head>
 
-<body>
-    aaaaaaaaa
+<body onload="init()">
+    <form onsubmit="submitForm(event, this)">
+        <label>Book title</label>
+        <br>
+        <input type="text">
+        <br>
+        <br>
+        <label>Book content</label>
+        <br>
+        <textarea name="content" autofocus></textarea>
+        <br>
+        <br>
+        <button>save</button>
+    </form>
 </body>
+
+
 
 </html>
