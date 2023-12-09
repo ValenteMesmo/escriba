@@ -27,8 +27,8 @@
 
             data.chapters.forEach(f => {
                 content += `###${f.title}\n`;
-                f.content.forEach(g => {
-                    content += `${g.value}\n`;
+                f.sections.forEach(g => {
+                    content += `${g.text}\n`;
                 });
             });
 
@@ -40,6 +40,8 @@
 
             const id = new URLSearchParams(window.location.search).get('id');
 
+            const ideal_word_count_per_section = 75 * 3;
+
             const list = (storageService.loadBookList() || {});
             if (!list[id])
                 list[id] = {};
@@ -49,22 +51,40 @@
             const lines = form[1].value.split('\n');
 
             var data = { chapters: [] };
-            var chapter = { title: '', content: [] };
+            var chapter = { title: '', sections: [] };
+            var section = { text: '' };
             data.chapters.push(chapter);
 
             lines.forEach(f => {
+
                 if (f.startsWith("###")) {
                     const chapterName = f.split("###")[1];
                     if (!chapter.title)
                         chapter.title = chapterName;
                     else {
-                        chapter = { title: chapterName, content: [] };
+                        chapter = { title: chapterName, sections: [] };
                         data.chapters.push(chapter);
                     }
+
+                    if (section.text.length > 0) {
+                        chapter.sections.push(section);
+                        section = { text: ''};
+                    }
+                    
+                    return;
                 }
-                else if(f)
-                    chapter.content.push({value: f});
+
+                if (section.text.split(' ').length >= ideal_word_count_per_section) {
+                    chapter.sections.push(section);
+                    section = { text: ''};
+                }
+                else{
+                    section.text += `${f}\n`;
+                    }
             });
+
+            if(section.text != '')
+                chapter.sections.push(section);
 
             storageService.saveBookData(id, data);
 

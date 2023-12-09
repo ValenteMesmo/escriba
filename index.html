@@ -5,14 +5,29 @@
     <script src="elements/typer-char.js"></script>
     <script src="services/storage-service.js"></script>
 
-    <link rel="stylesheet" href="main.css"/>
+    <link rel="stylesheet" href="main.css" />
 </head>
 
-<body>  
+<body>
     index
-    
+
     <script>
-        
+        const list = storageService.loadBookList();
+
+        const fragment = document.createDocumentFragment();
+
+        Object.values(list).forEach(f => {
+            console.log(f);
+
+            const link = document.createElement("a");
+
+            link.href = `book?id=${f.id}`;
+            link.textContent = f.title;
+
+            fragment.appendChild(link);
+        });
+
+        document.body.appendChild(fragment);
     </script>
 </body>
 
