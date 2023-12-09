@@ -3,6 +3,12 @@
 <head>
     <script src="services/storage-service.js"></script>
     <link rel="stylesheet" href="main.css" />
+    <style>
+        textarea{
+            width: 100%;
+            height: 80%;
+        }
+    </style>
 
     <script>
         function init() {
@@ -28,6 +34,7 @@
             data.chapters.forEach(f => {
                 content += `###${f.title}\n`;
                 f.sections.forEach(g => {
+                    content += `##${g.title}\n`;
                     content += `${g.text}\n`;
                 });
             });
@@ -40,7 +47,7 @@
 
             const id = new URLSearchParams(window.location.search).get('id');
 
-            const ideal_word_count_per_section = 75 * 3;
+            //const ideal_word_count_per_section = 30 * 3;
 
             const list = (storageService.loadBookList() || {});
             if (!list[id])
@@ -74,9 +81,14 @@
                     return;
                 }
 
-                if (section.text.split(' ').length >= ideal_word_count_per_section) {
+                if (f.startsWith("##")) {
+                    const sectionName = f.split("##")[1];
+                    if(!section.title){
+                        section.title = sectionName;
+                    }else{
                     chapter.sections.push(section);
-                    section = { text: ''};
+                    section = { title: sectionName, text: ''};
+                    }
                 }
                 else{
                     section.text += `${f}\n`;
