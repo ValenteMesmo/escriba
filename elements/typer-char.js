@@ -50,7 +50,7 @@ class TyperChar extends HTMLElement {
         const element = this.shadowRoot.children[0];
 
         if (name == 'char')
-            element.textContent = newValue;
+            element.textContent =  newValue == '\n' ? '↲' : newValue;
 
         if (name == 'state') {
             if (newValue == 'success')

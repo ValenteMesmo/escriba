@@ -22,7 +22,7 @@ class TyperArea extends HTMLElement {
             if (e.repeat)
                 return;
 
-            if (['ShiftLeft', 'ShiftRight', 'ControlLeft', 'ControlRight'].includes(e.code)) {
+            if (['ShiftLeft', 'ShiftRight', 'ControlLeft', 'ControlRight', 'CapsLock'].includes(e.code)) {
                 return;
             }
 
@@ -31,7 +31,18 @@ class TyperArea extends HTMLElement {
             if (!currentChar)
                 return;//completed
 
-            if (e.key == currentChar.getAttribute('char')) {
+            if (e.key == 'Enter') {
+                if(     currentChar.getAttribute('char') == '\n')
+                {
+                    
+                currentChar.setAttribute('state', 'success');
+                }
+                else{
+                    
+                currentChar.setAttribute('state', 'error');
+                }
+            }
+            else if (e.key == currentChar.getAttribute('char')) {
                 currentChar.setAttribute('state', 'success');
             }
             else
@@ -51,6 +62,9 @@ class TyperArea extends HTMLElement {
             char.setAttribute('char', c);
             char.setAttribute('state', '0');
             fragment.appendChild(char);
+
+            if(c == '\n')
+            fragment.appendChild(document.createElement('br'));
         }
 
         this.shadowRoot.appendChild(fragment);
