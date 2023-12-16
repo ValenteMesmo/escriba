@@ -1,0 +1,31 @@
+<html>
+
+<head>
+    <script src="../elements/typer-area.js"></script>
+    <script src="../elements/typer-char.js"></script>
+    <script src="../elements/typer-book-section.js"></script>
+    <script src="../services/storage-service.js"></script>
+
+    <link rel="stylesheet" href="../main.css" />
+    <script>
+        function onload()
+        {            
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            const chapter = params.get('chapter');
+            const section = params.get('section');
+
+            const data = storageService.loadBookData(id);
+            
+            const element = document.getElementsByTagName('typer-area')[0];
+            element.setText(data.chapters[chapter].sections[section].text);
+     
+        }
+    </script>
+</head>
+
+<body onload="onload()">
+    <typer-area></typer-area>
+</body>
+
+</html>
