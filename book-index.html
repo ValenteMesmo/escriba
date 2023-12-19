@@ -3,7 +3,7 @@
 <head>
     <script src="../elements/typer-area.js"></script>
     <script src="../elements/typer-char.js"></script>
-    <script src="../services/storage-service.js"></script>
+    <script src="../elements/typer-storage.js"></script>
 
     <link rel="stylesheet" href="main.css" />
 
@@ -24,7 +24,7 @@
                 frag.appendChild(link);
             }
 
-            const data = storageService.loadBookData(id);
+            const data = document.getElementsByTagName('typer-storage')[0].loadBookData(id);
 
             data.chapters.forEach((f,chapterIndex) => {
                 frag.appendChild(document.createElement('hr'));
@@ -51,6 +51,7 @@
 <body onload="init()">
     book
 
+    <typer-storage></typer-storage>
 </body>
 
 </html>

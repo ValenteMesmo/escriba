@@ -1,18 +1,16 @@
 <html>
 
 <head>
-    <script src="elements/typer-area.js"></script>
-    <script src="elements/typer-char.js"></script>
-    <script src="services/storage-service.js"></script>
+    <script src="elements/typer-storage.js"></script>
 
     <link rel="stylesheet" href="main.css" />
 </head>
 
 <body>
     index
-
+<typer-storage></typer-storage>
     <script>
-        const list = storageService.loadBookList();
+        const list = document.getElementsByTagName('typer-storage')[0].loadBookList();
 
         const fragment = document.createDocumentFragment();
 
