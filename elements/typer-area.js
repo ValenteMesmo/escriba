@@ -28,14 +28,7 @@
                 }
 
                 const currentChar =
-                    this.shadowRoot.querySelectorAll('[state="current"]')[0];
-
-                if (!currentChar) {
-                    this.onComplete();
-                    return;
-                }
-
-                this.shadowRoot.querySelectorAll('[state="0"]')[0].setAttribute('state', 'current');
+                    this.shadowRoot.querySelector('[state="current"]');
 
                 if (e.key == 'Enter') {
                     if (currentChar.getAttribute('char') == '\n')
@@ -49,8 +42,16 @@
                 else {
                     currentChar.setAttribute('state', 'error');
                 }
+ 
+                const nextChar = this.shadowRoot.querySelector('[state="0"]');
+                if(nextChar){
+                    nextChar.setAttribute('state', 'current');
+                }
+                else {
+                    this.onComplete();
+                }
 
-            });
+           });
         }
 
         setText(value) {
@@ -72,7 +73,7 @@
             }
 
             this.shadowRoot.appendChild(fragment);
-            this.shadowRoot.querySelectorAll('[state="0"]')[0].setAttribute('state', 'current');
+            this.shadowRoot.querySelector('[state="0"]').setAttribute('state', 'current');
         }
     }
 
