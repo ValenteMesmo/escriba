@@ -36,6 +36,11 @@ class TyperChar extends HTMLElement {
             .past-success {
                 background-color: rgb(221, 221, 221);
             }
+
+            .current {
+                border-bottom: 3px solid #0a6bf9;
+                background: rgba(255,255,255,.21);
+            }
         `;
 
         this.shadowRoot.appendChild(style);
@@ -55,6 +60,8 @@ class TyperChar extends HTMLElement {
         if (name == 'state') {
             if (newValue == 'success')
                 element.className = 'past-success';
+            else if (newValue == 'current')
+                element.className = 'current';
             else if (newValue == 'error')
                 element.className = 'past-error';
             else if (newValue == 'warning')

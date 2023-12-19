@@ -1,48 +1,55 @@
-(function(){
+(function () {
 
     class TyperArea extends HTMLElement {
 
-        onComplete = function(){};
+        onComplete = function () { };
 
         connectedCallback() {
             if (this.shadowRoot)
-            return;
+                return;
 
             this.attachShadow({ mode: "open" });
 
             const style = document.createElement("style");
-            style.textContent = ` #content { background-color: red; } `;
+            style.textContent = `
+                #content { 
+                    background-color: red; 
+                }                
+            `;
             this.shadowRoot.appendChild(style);
 
             document.addEventListener("keydown", e => {
-                if (e.repeat){
+                if (e.repeat) {
                     return;
                 }
 
-                if (['ShiftLeft', 'ShiftRight', 'ControlLeft', 'ControlRight', 'CapsLock'].includes(e.code)){
+                if (['ShiftLeft', 'ShiftRight', 'ControlLeft', 'ControlRight', 'CapsLock'].includes(e.code)) {
                     return;
                 }
 
-                const currentChar = 
-                    this.shadowRoot.querySelectorAll('[state="0"]')[0];
+                const currentChar =
+                    this.shadowRoot.querySelectorAll('[state="current"]')[0];
 
-                if (!currentChar){
+                if (!currentChar) {
                     this.onComplete();
                     return;
                 }
 
-                if (e.key == 'Enter')                {
-                    if(currentChar.getAttribute('char') == '\n')
-                    currentChar.setAttribute('state', 'success');
+                this.shadowRoot.querySelectorAll('[state="0"]')[0].setAttribute('state', 'current');
+
+                if (e.key == 'Enter') {
+                    if (currentChar.getAttribute('char') == '\n')
+                        currentChar.setAttribute('state', 'success');
                     else
-                    currentChar.setAttribute('state', 'error');
+                        currentChar.setAttribute('state', 'error');
                 }
-                else if (e.key == currentChar.getAttribute('char')){
+                else if (e.key == currentChar.getAttribute('char')) {
                     currentChar.setAttribute('state', 'success');
                 }
                 else {
                     currentChar.setAttribute('state', 'error');
                 }
+
             });
         }
 
@@ -59,11 +66,13 @@
                 char.setAttribute('state', '0');
                 fragment.appendChild(char);
 
-                if(c == '\n')
-                fragment.appendChild(document.createElement('br'));
+                if (c == '\n') {
+                    fragment.appendChild(document.createElement('br'));
+                }
             }
 
             this.shadowRoot.appendChild(fragment);
+            this.shadowRoot.querySelectorAll('[state="0"]')[0].setAttribute('state', 'current');
         }
     }
 
