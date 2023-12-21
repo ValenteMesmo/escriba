@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <script src="services/storage-service.js"></script>
+    <script src="elements/typer-storage.js"></script>
     <link rel="stylesheet" href="main.css" />
     <style>
         textarea {
@@ -18,13 +18,14 @@
 
             const form = document.getElementsByTagName('form')[0];
 
-            const title = (storageService.loadBookList() || {})[id]?.title;
+            const storage = this.document.getElementsByTagName('typer-storage')[0];
+            const title = (storage.loadBookList() || {})[id]?.title;
 
             if (title) {
                 form[0].value = title;
             }
 
-            const data = storageService.loadBookData(id) || {};
+            const data = storage.loadBookData(id) || {};
 
             if (!data.chapters)
                 return;
@@ -49,11 +50,13 @@
 
             //const ideal_word_count_per_section = 30 * 3;
 
-            const list = (storageService.loadBookList() || {});
+            const storage = this.document.getElementsByTagName('typer-storage')[0];
+
+            const list = (storage.loadBookList() || {});
             if (!list[id])
                 list[id] = {};
             list[id].title = form[0].value;
-            storageService.saveBookList(list);
+            storage.saveBookList(list);
 
             const lines = form[1].value.split('\n');
 
@@ -98,7 +101,7 @@
             if(section.text != '')
                 chapter.sections.push(section);
 
-            storageService.saveBookData(id, data);
+            storage.saveBookData(id, data);
 
             window.location = '/';
         }
@@ -106,6 +109,7 @@
 </head>
 
 <body onload="init()">
+    <typer-storage></typer-storage>
     <form onsubmit="submitForm(event, this)">
         <label>Book title</label>
         <br>
