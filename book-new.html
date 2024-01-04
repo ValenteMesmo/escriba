@@ -3,14 +3,14 @@
 <head>
 
     <link rel="stylesheet" href="main.css" />
-    <script src="services/storage-service.js"></script>
+    <script src="elements/typer-storage.js"></script>
 
     <script>
 
        
 
         function submitForm(e, form) {
-
+            const storageService = document.querySelector('typer-storage');
             const list = storageService.loadBookList() || {};
 
             const title = form['title'].value;
@@ -34,6 +34,7 @@
 </head>
 
 <body>
+    <typer-storage></typer-storage>
     <form onsubmit="submitForm(event, this)">
         <label> Title </label>
         <input type="text" name="title" autofocus>

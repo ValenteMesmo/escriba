@@ -1,32 +1,49 @@
 <html>
 
-<head>
-    <script src="elements/typer-storage.js"></script>
+    <head>
+        <script src="elements/typer-storage.js"></script>
+        <style>
+            .card {
+                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+                transition: 0.3s;
+                width: 40%;
+                cursor: pointer;
+            }
 
-    <link rel="stylesheet" href="main.css" />
-</head>
+            .card:hover {
+                box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            }
 
-<body>
-    index
-<typer-storage></typer-storage>
-    <script>
-        const list = document.getElementsByTagName('typer-storage')[0].loadBookList();
+            .container {
+                  padding: 2px 16px;
+            }
+        </style>
+        <link rel="stylesheet" href="main.css" />
+        <script>
+            function onload(){
+                const list = document.getElementsByTagName('typer-storage')[0].loadBookList();
 
-        const fragment = document.createDocumentFragment();
+                const fragment = document.createDocumentFragment();
 
-        Object.values(list).forEach(f => {
-            console.log(f);
+                Object.values(list).forEach(f => {
+                    const card = document.createElement('div');
+                    card.classList.add('card');
+                    card.innerHTML = `<div class='container'><h4>${f.title}</h4></div>`;
+                    card.onclick = function(){
+                        window.location =  `/book-index?id=${f.id}`;
+                    };
+                    fragment.appendChild(card);
+                });
 
-            const link = document.createElement("a");
+                document.body.appendChild(fragment);
+            }
+        </script>
+    </head>
 
-            link.href = `/book-index?id=${f.id}`;
-            link.textContent = f.title;
+    <body onload="onload()">
+        <a href="/book-new.html">add new book</a>
+        <typer-storage></typer-storage>
 
-            fragment.appendChild(link);
-        });
-
-        document.body.appendChild(fragment);
-    </script>
-</body>
+    </body>
 
 </html>
