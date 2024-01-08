@@ -22,10 +22,22 @@
 
             data = storage.loadBookData(id);
 
-            area.setText(data.chapters[chapter].sections[section].text);
+            area.setText(data.chapters[chapter].sections[section]);
         }
 
-        function onComplete() {
+        function onComplete(wpm, errorCount) {
+            const storage = document.querySelector('typer-storage');
+
+            const score = data.chapters[chapter].sections[section].score 
+                || { wpm: 0, errors: 999};
+
+            if(wpm >= score.wpm && errorCount <= score.errors){
+                score.wpm = wpm;
+                score.errors = errorCount;
+                data.chapters[chapter].sections[section].score = score;
+                storage.saveBookData(id, data);
+            }
+
             if (data.chapters[chapter].sections[section + 1]) {
                 window.location = `/book-section?id=${id}&chapter=${chapter}&section=${section + 1}`;
             }

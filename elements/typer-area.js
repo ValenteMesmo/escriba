@@ -1,5 +1,9 @@
 (function () {
 
+    let typingStarted = null;
+    let wordCount = 0;
+    let errorCount = 0;
+
     class TyperArea extends HTMLElement {
 
         onComplete = function () { };
@@ -50,34 +54,44 @@
                     return;
                 }
 
+                if(!typingStarted)
+                typingStarted = Date.now();
+
                 const currentChar =
                     this.shadowRoot.querySelector('[state="current"]');
 
-                if (e.key == 'Enter') {
-                    if (currentChar.textContent == '↲')
+                if (currentChar){
+                    if (e.key == 'Enter') {
+                        if (currentChar.textContent == '↲')
                         currentChar.setAttribute('state', 'success');
-                    else
+                        else{
+                            currentChar.setAttribute('state', 'error');
+                            errorCount++;
+                        }
+                    }
+                    else if (e.key == currentChar.textContent) {
+                        currentChar.setAttribute('state', 'success');
+                    }
+                    else {
                         currentChar.setAttribute('state', 'error');
+                        errorCount++;
+                    }
                 }
-                else if (e.key == currentChar.textContent) {
-                    currentChar.setAttribute('state', 'success');
-                }
-                else {
-                    currentChar.setAttribute('state', 'error');
-                }
- 
+                    
                 const nextChar = this.shadowRoot.querySelector('[state="none"]');
                 if(nextChar){
                     nextChar.setAttribute('state', 'current');
                 }
                 else {
-                    this.onComplete();
+                    const typingEnded = Date.now();
+                    const durationInMinutes = (typingEnded - typingStarted) / 1000 / 60;
+                    const wpm = wordCount / durationInMinutes;
+                    this.onComplete(wpm, errorCount);
                 }
-
            });
         }
 
-        setText(value) {
+        setText(data) {
             this.connectedCallback();
 
             const content = this.shadowRoot.getElementById("content");
@@ -85,7 +99,7 @@
 
             const fragment = document.createDocumentFragment();
 
-            for (const c of value) {
+            for (const c of data.text) {
                 const char = document.createElement('span');
                 char.textContent =  c == '\n' ? '↲' : c;
                 char.setAttribute('state', 'none');
@@ -98,6 +112,8 @@
 
             content.appendChild(fragment);
             content.querySelector('[state="none"]').setAttribute('state', 'current');
+
+            wordCount = data.text.match(/[\w\d\’\'-]+/gi)?.length || 0;
         }
     }
 

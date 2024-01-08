@@ -36,6 +36,9 @@
                     const card = document.createElement('a');
                     card.href = `book-section?id=${id}&section=${i}&chapter=${chapterIndex}`;
                     card.textContent = `Section ${i}`;
+                    if(g.score){
+                        card.textContent+= ` ${g.score.wpm} | ${g.score.errors}`;
+                    }
                     frag.appendChild(card);
                 });
                 
