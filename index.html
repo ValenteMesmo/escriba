@@ -2,48 +2,43 @@
 
     <head>
         <script src="elements/typer-storage.js"></script>
-        <style>
-            .card {
-                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-                transition: 0.3s;
-                width: 40%;
-                cursor: pointer;
-            }
+        <script src="elements/typer-area.js"></script>
 
-            .card:hover {
-                box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-            }
+        <script src="major-elements/home-page.js"></script>
+        <script src="major-elements/book-page.js"></script>
+        <script src="major-elements/typer-page.js"></script>
+        <script src="major-elements/edit-page.js"></script>
+        <script src="major-elements/new-page.js"></script>
 
-            .container {
-                  padding: 2px 16px;
-            }
-        </style>
         <link rel="stylesheet" href="main.css" />
-        <script>
-            function onload(){
-                const list = document.getElementsByTagName('typer-storage')[0].loadBookList();
-
-                const fragment = document.createDocumentFragment();
-
-                Object.values(list).forEach(f => {
-                    const card = document.createElement('div');
-                    card.classList.add('card');
-                    card.innerHTML = `<div class='container'><h4>${f.title}</h4></div>`;
-                    card.onclick = function(){
-                        window.location =  `/book-index?id=${f.id}`;
-                    };
-                    fragment.appendChild(card);
-                });
-
-                document.body.appendChild(fragment);
-            }
-        </script>
     </head>
 
-    <body onload="onload()">
-        <a href="/book-new.html">add new book</a>
-        <typer-storage></typer-storage>
+    <body> 
+        <script>
+            // TODO: Exibir o char errado, para você entender o seu erro... permitir apagar para corrigir
+            const params = new URLSearchParams(window.location.search);
 
+            const id = params.get('id');
+            const section = params.get('section');  
+            const edit = params.get('edit');  
+            const add = params.get('new');  
+
+            if(add){
+                document.body.appendChild(document.createElement('new-page'));
+            }
+            else if (id != null && section != null){
+                document.body.appendChild(document.createElement('typer-page'));
+            }
+            else if (id != null && edit){
+                document.body.appendChild(document.createElement('edit-page'));
+            }
+            else if (id != null){
+                document.body.appendChild(document.createElement('book-page'));
+            }
+            else {
+                document.body.appendChild(document.createElement('home-page'));
+            }
+        </script>
     </body>
 
 </html>
