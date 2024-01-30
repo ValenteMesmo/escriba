@@ -43,7 +43,7 @@ class BookPage extends HTMLElement {
 
         const data = document
             .createElement('typer-storage')
-            .loadBookData(id);
+            .loadBookData(id) || { sections : [] };
 
         const h1 = document.createElement('h1');
         h1.textContent = data.title;
