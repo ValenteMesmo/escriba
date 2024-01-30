@@ -28,6 +28,13 @@ class HomePage extends HTMLElement {
             }`;
         frag.appendChild(style);
 
+        {
+            const link = document.createElement("a");
+            link.href = `/?new=1`;
+            link.textContent = 'new';
+            frag.appendChild(link);
+        }
+
         const list = document
             .createElement('typer-storage')
             .loadBookList();
