@@ -61,15 +61,7 @@
                     this.shadowRoot.querySelector('[state="current"]');
 
                 if (currentChar){
-                    if (e.key == 'Enter') {
-                        if (currentChar.textContent == '↲')
-                        currentChar.setAttribute('state', 'success');
-                        else{
-                            currentChar.setAttribute('state', 'error');
-                            errorCount++;
-                        }
-                    }
-                    else if (e.key == currentChar.textContent) {
+                    if (e.key == currentChar.keyName) {
                         currentChar.setAttribute('state', 'success');
                     }
                     else {
@@ -101,7 +93,20 @@
 
             for (const c of data.text) {
                 const char = document.createElement('span');
-                char.textContent =  c == '\n' ? '↲' : c;
+
+                if ( c == '\n') {
+                    char.textContent = '↲';
+                    char.keyName = 'Enter';
+                }
+                else if (c == ' '){
+                    char.innerHTML = '&nbsp;';
+                    char.keyName = ' ';
+                }
+                else{
+                    char.textContent = c;
+                    char.keyName = c;
+                }
+
                 char.setAttribute('state', 'none');
                 fragment.appendChild(char);
 
