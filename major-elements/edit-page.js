@@ -16,7 +16,7 @@
             id = new URLSearchParams(window.location.search).get('id');
 
             if (!id){
-                window.location = `${window.location.href}`;
+                window.location = window.location.pathname;
             }
 
 
@@ -107,7 +107,7 @@
             }
             storage.saveBookData(id, data);
 
-            window.location = window.location.href;
+            window.location = window.location.pathname;
         }
 
     }

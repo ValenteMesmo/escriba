@@ -42,7 +42,7 @@
             storageService.saveBookList(list);            
 
 
-            window.location = `${window.location.href}?id=${newItem.id}&edit=1`;
+            window.location = `${window.location.pathname}?id=${newItem.id}&edit=1`;
 
         }
 

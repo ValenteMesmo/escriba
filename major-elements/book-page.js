@@ -11,7 +11,7 @@ class BookPage extends HTMLElement {
         const id = new URLSearchParams(window.location.search).get('id');
 
         if (!id){
-            window.location = `${window.location.href}`;
+            window.location = window.location.pathname;
         }
 
         const frag = document.createDocumentFragment();
@@ -36,7 +36,7 @@ class BookPage extends HTMLElement {
 
         {
             const link = document.createElement("a");
-            link.href = `${window.location.href}?id=${id}&edit=1`;
+            link.href = `${window.location.pathname}?id=${id}&edit=1`;
             link.textContent = 'edit';
             frag.appendChild(link);
         }
@@ -58,7 +58,7 @@ class BookPage extends HTMLElement {
                 <h4>Section ${i} ${score}</h4>
                 </div>`;
             card.onclick = function(){
-                window.location =  `${window.location.href}?id=${id}&section=${i}`;
+                window.location =  `${window.location.pathname}?id=${id}&section=${i}`;
             };
 
             frag.appendChild(card);

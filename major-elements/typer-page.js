@@ -56,10 +56,10 @@
         }
 
         if (data.sections[section + 1]) {
-            window.location = `/?id=${id}&section=${section + 1}`;
+            window.location = `${window.location.pathname}?id=${id}&section=${section + 1}`;
         }
         else {
-            window.location = `/?id=${id}`;
+            window.location = `${window.location.pathname}?id=${id}`;
         }
     } 
 
