@@ -30,7 +30,7 @@ class HomePage extends HTMLElement {
 
         {
             const link = document.createElement("a");
-            link.href = `/?new=1`;
+            link.href = `${window.location.href}?new=1`;
             link.textContent = 'new';
             frag.appendChild(link);
         }
@@ -44,7 +44,7 @@ class HomePage extends HTMLElement {
             card.classList.add('card');
             card.innerHTML = `<div class='container'><h4>${f.title}</h4></div>`;
             card.onclick = function(){
-                window.location =  `/?id=${f.id}`;
+                window.location =  `${window.location.href}?id=${f.id}`;
             };
 
             frag.appendChild(card);
