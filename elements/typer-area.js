@@ -21,6 +21,12 @@
                     flex-wrap: wrap;
                 }
 
+                #content hr {
+                    width: 100%;
+                    visibility: hidden;
+                    margin: 0;
+                }
+
                 span {
                     font-weight: 300;
                     font-size: 35px;
@@ -118,7 +124,7 @@
                 currentWord.appendChild(char);
 
                 if (c == '\n') {
-                    fragment.appendChild(document.createElement('br'));
+                    fragment.appendChild(document.createElement('hr'));
                 }
 
                 if (['\n', ' '].includes(c)){
