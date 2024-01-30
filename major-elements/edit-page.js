@@ -81,7 +81,11 @@
             list[id].title = form[0].value;
             storage.saveBookList(list);
 
-            const lines = form[1].value.replace(/ {1,}/g, ' ').replace(/\n{1,}/g, '\n').split('\n');
+            const lines = form[1].value
+                .replace(/ {1,}/g, ' ')
+                .replace(/\n{1,}/g, '\n')
+                .replace(/(’|`|´)/g, '\'')
+                .split('\n');
 
             var data = { sections: [] };
             var section = { text: '' };

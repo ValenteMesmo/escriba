@@ -96,6 +96,8 @@
 
             const fragment = document.createDocumentFragment();
 
+            let currentWord = document.createElement('span');
+
             for (const c of data.text) {
                 const char = document.createElement('span');
 
@@ -113,12 +115,19 @@
                 }
 
                 char.setAttribute('state', 'none');
-                fragment.appendChild(char);
+                currentWord.appendChild(char);
 
                 if (c == '\n') {
                     fragment.appendChild(document.createElement('br'));
                 }
-            }
+
+                if (['\n', ' '].includes(c)){
+                    fragment.appendChild(currentWord);
+                    currentWord = document.createElement('div');
+                }
+
+           }
+            fragment.appendChild(currentWord);
 
             content.appendChild(fragment);
             content.querySelector('[state="none"]').setAttribute('state', 'current');
