@@ -37,7 +37,7 @@ class HomePage extends HTMLElement {
 
         const list = document
             .createElement('typer-storage')
-            .loadBookList();
+            .loadBookList() || [];
 
         Object.values(list).forEach(f => {
             const card = document.createElement('div');
