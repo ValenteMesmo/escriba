@@ -16,6 +16,11 @@
 
             const style = document.createElement("style");
             style.textContent = `
+                #content {
+                    display: flex;
+                    flex-wrap: wrap;
+                }
+
                 span {
                     font-weight: 300;
                     font-size: 35px;
