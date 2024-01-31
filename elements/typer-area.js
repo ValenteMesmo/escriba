@@ -123,13 +123,12 @@
                 char.setAttribute('state', 'none');
                 currentWord.appendChild(char);
 
-                if (c == '\n') {
-                    fragment.appendChild(document.createElement('hr'));
-                }
-
                 if (['\n', ' '].includes(c)){
                     fragment.appendChild(currentWord);
                     currentWord = document.createElement('div');
+                    if (c == '\n') {
+                        fragment.appendChild(document.createElement('hr'));
+                    }
                 }
 
            }
