@@ -61,7 +61,7 @@
                     return;
                 }
 
-                if (['ShiftLeft', 'ShiftRight', 'ControlLeft', 'ControlRight', 'CapsLock'].includes(e.code)) {
+                if (['ShiftLeft', 'ShiftRight', 'ControlLeft', 'ControlRight', 'CapsLock', 'AltLeft', 'Tab'].includes(e.code)) {
                     return;
                 }
 
@@ -71,7 +71,16 @@
                 const currentChar =
                     this.shadowRoot.querySelector('[state="current"]');
 
+
                 if (currentChar){
+
+                    if (e.key == 'Backspace') {
+                        const previousChar = [...this.shadowRoot.querySelectorAll('span[state]:not([state=current],[state=none])')].pop();
+                        previousChar.setAttribute('state', 'current');
+                        currentChar.setAttribute('state', 'none');
+                        return;
+                    }
+
                     if (e.key == currentChar.keyName) {
                         currentChar.setAttribute('state', 'success');
                     }
