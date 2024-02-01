@@ -41,9 +41,10 @@ class BookPage extends HTMLElement {
             frag.appendChild(link);
         }
 
-        const data = document
-            .createElement('typer-storage')
-            .loadBookData(id) || { sections : [] };
+        const storage = document.createElement('typer-storage');
+
+        const data = storage.loadBookData(id) || { sections : [] };
+        const scores = storage.loadScores(id) || { };
 
         const h1 = document.createElement('h1');
         h1.textContent = data.title;
@@ -52,7 +53,7 @@ class BookPage extends HTMLElement {
         data.sections.forEach((g,i)=>{
             const card = document.createElement('div');
             card.classList.add('card');
-            const score = !!g.score ? `(${Math.floor(g.score.wpm)} wpm | errors ${g.score.errors})` : '';
+            const score = !!scores[i] ? `(${Math.floor(scores[i].wpm)} wpm | errors ${scores[i].errors})` : '';
             card.innerHTML = `
                 <div class='container'>
                 <h4>Section ${i} ${score}</h4>

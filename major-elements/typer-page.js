@@ -44,15 +44,15 @@
 
     function onComplete(wpm, errorCount) {
         const storage = shadowRoot.querySelector('typer-storage');
+        let scores = storage.loadScores(id) || {};
+        if(!scores[section]){
+            scores[section] = {  wpm: 0, errors: 999};
+        }
 
-        const score = data.sections[section].score 
-            || { wpm: 0, errors: 999};
-
-        if(wpm >= score.wpm && errorCount <= score.errors){
-            score.wpm = wpm;
-            score.errors = errorCount;
-            data.sections[section].score = score;
-            storage.saveBookData(id, data);
+        if(wpm >= scores[section].wpm && errorCount <= scores[section].errors){
+            scores[section].wpm = wpm;
+            scores[section].errors = errorCount;
+            storage.saveScores(id, scores);
         }
 
         if (data.sections[section + 1]) {
