@@ -2,7 +2,6 @@
 
     let typingStarted = null;
     let wordCount = 0;
-    let errorCount = 0;
 
     class TyperArea extends HTMLElement {
 
@@ -86,7 +85,6 @@
                     }
                     else {
                         currentChar.setAttribute('state', 'error');
-                        errorCount++;
                     }
                 }
                     
@@ -98,7 +96,8 @@
                     const typingEnded = Date.now();
                     const durationInMinutes = (typingEnded - typingStarted) / 1000 / 60;
                     const wpm = wordCount / durationInMinutes;
-                    this.onComplete(wpm, errorCount);
+                    const errorsCount = [...this.shadowRoot.querySelectorAll('span[state=error]')].length;
+                    this.onComplete(wpm, errorsCount);
                 }
            });
         }
