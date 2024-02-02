@@ -85,6 +85,8 @@
                 .replace(/ {1,}/g, ' ')
                 .replace(/\n{1,}/g, '\n')
                 .replace(/(’|`|´)/g, '\'')
+                .replace(/(“|”)/g, '"')
+                .replace(/—/g, '\-')
                 .split('\n');
 
             var data = { sections: [] };
