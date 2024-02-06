@@ -28,7 +28,7 @@
 
                 span {
                     font-weight: 300;
-                    font-size: 35px;
+                    font-size: 30px;
                 }
 
                 span[state="warning"] {
