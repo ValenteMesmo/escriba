@@ -64,6 +64,10 @@
                     return;
                 }
 
+                if (e.key == 'Dead'){
+                    return;
+                }
+
                 if(!typingStarted)
                 typingStarted = Date.now();
 
@@ -77,6 +81,7 @@
                         const previousChar = [...this.shadowRoot.querySelectorAll('span[state]:not([state=current],[state=none])')].pop();
                         previousChar.setAttribute('state', 'current');
                         currentChar.setAttribute('state', 'none');
+                        previousChar.innerHTML = previousChar.originalContent;
                         return;
                     }
 
@@ -85,6 +90,9 @@
                     }
                     else {
                         currentChar.setAttribute('state', 'error');
+                        if(![' ', 'Enter'].includes(e.key)){
+                            currentChar.innerHTML = e.key;
+                        }
                     }
                 }
                     
@@ -116,15 +124,15 @@
                 const char = document.createElement('span');
 
                 if ( c == '\n') {
-                    char.textContent = '↲';
+                    char.originalContent = char.innerHTML = '↲';
                     char.keyName = 'Enter';
                 }
                 else if (c == ' '){
-                    char.innerHTML = '&nbsp;';
+                    char.innerHTML = char.originalContent = '&nbsp;';
                     char.keyName = ' ';
                 }
                 else{
-                    char.textContent = c;
+                    char.originalContent = char.innerHTML = c;
                     char.keyName = c;
                 }
 
