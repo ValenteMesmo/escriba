@@ -28,6 +28,11 @@ class BookPage extends HTMLElement {
             .card:hover {
                 box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
             }
+            
+            h3 {
+                font-style: italic;
+                text-align: center;
+            }
 
             .container {
                   padding: 2px 16px;
@@ -56,7 +61,6 @@ class BookPage extends HTMLElement {
                 const h3 = document.createElement('h3');
                 h3.textContent = g.title;
                 frag.append(h3);
-                frag.append(document.createElement('hr'));
             }
 
             const card = document.createElement('div');
