@@ -51,6 +51,14 @@ class BookPage extends HTMLElement {
         frag.appendChild(h1);
 
         data.sections.forEach((g,i)=>{
+
+            if(g.title && g.title != '#'){
+                const h3 = document.createElement('h3');
+                h3.textContent = g.title;
+                frag.append(h3);
+                frag.append(document.createElement('hr'));
+            }
+
             const card = document.createElement('div');
             card.classList.add('card');
             const score = !!scores[i] ? `(${Math.floor(scores[i].wpm)} wpm | errors ${scores[i].errors})` : '';
