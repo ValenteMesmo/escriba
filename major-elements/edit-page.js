@@ -36,7 +36,7 @@
 <br>
 <label>Book content</label>
 <br>
-<textarea name="content" autofocus></textarea>
+<textarea name="content" autofocus style="width:100%; height:81%;"></textarea>
 <br>
 <br>
 <button>save</button>
